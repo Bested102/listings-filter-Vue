@@ -1,0 +1,181 @@
+:root {
+  --LightGrayishCyanBackground: hsl(180, 52%, 96%);
+  --LightGrayishCyanFilter: hsl(180, 31%, 95%);
+  --DarkGrayishCyan: hsl(180, 8%, 52%);
+  --VeryDarkGrayishCyan: hsl(180, 14%, 20%);
+  --DesaturatedDarkCyan: hsl(180, 29%, 50%);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'League Spartan', sans-serif;
+  background-color: var(--LightGrayishCyanBackground);
+  overflow-x: hidden;
+  font-size: 15px;
+}
+
+header {
+  background-color: var(--DesaturatedDarkCyan);
+}
+
+main {
+  max-width: 1100px;
+  margin: 40px auto 60px;
+}
+
+.job , .filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 20px 30px;
+  border-radius: 3px;
+  margin-bottom: 25px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.132);
+  margin-inline:10px;
+  position: relative;
+}
+
+.job:has(.featured) {
+  border-left: 5px solid var(--DesaturatedDarkCyan);
+  padding-left: 25px;
+}
+
+.job .info {
+  margin-inline: 25px auto;
+}
+
+.job .status {
+  display: inline-flex;
+  margin-left: 15px;
+  gap: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  color: white;
+  font-size: 13px;
+}
+
+.job .status span {
+  padding: 5px 6px 2px;
+  background-color: var(--DesaturatedDarkCyan);
+  border-radius: 10px;
+}
+
+.job .status .featured{
+  background-color: var(--VeryDarkGrayishCyan);
+}
+
+.job .name {
+  color: var(--DesaturatedDarkCyan);
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.job h3 {
+  margin-block: 10px;
+  font-size: 20px;
+}
+
+.job .date {
+  display: flex;
+  gap: 10px;
+  color: var(--DarkGrayishCyan);
+  align-items: center;
+}
+
+.job .date .dot{
+  transform: translateY(-2px);
+}
+
+.job .tags {
+  display: flex;
+  color: var(--DesaturatedDarkCyan);
+  gap: 10px;
+}
+
+.job .tags span {
+  background-color: var(--LightGrayishCyanFilter);
+  padding: 4px 8px;
+  border-radius: 2px;
+  user-select: none;
+  cursor: pointer;
+}
+
+.filter{
+  color: var(--DesaturatedDarkCyan);
+  gap: 15px;
+}
+
+.filter .fTag span{
+  background-color: var(--DesaturatedDarkCyan);
+  display: inline-grid;
+  place-items: center;
+  width: 25px;
+  aspect-ratio: .95;
+  cursor: pointer;
+  transition: .15s;
+}
+
+.filters{
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.filters .fTag{
+  background-color: var(--LightGrayishCyanFilter);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-left: 5px;
+  border-radius: 3px;
+  overflow: hidden;
+  user-select: none;
+} 
+
+.filter .fTag span:hover{
+  background-color: var(--VeryDarkGrayishCyan);
+}
+
+.filter .clear{
+  user-select: none;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.filter .clear:hover{
+  user-select: none;
+  text-decoration: underline;
+}
+
+@media (max-width:768px) {
+  .job img{
+    max-width: 60px;
+    position: absolute;
+    top:0;
+    transform: translateY(-50%);
+  }
+  .job{
+    margin-bottom: 50px;
+    padding-top: 40px;
+    display: block;
+    padding-inline: 20px;
+  }
+  .job .info{
+    margin: 0 0 20px;
+  }
+  .job .tags{
+    flex-wrap: wrap;
+  }
+  .job h3{
+    font-size: 18px;
+  }
+  .filter{
+    padding:15px;
+  }
+}

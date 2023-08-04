@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <title>Frontend Mentor | Job Listings</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <header><img src="images/bg-header-desktop.svg" alt=""></header>
+
+    <main>
+      <section class="filter" v-if="filters.length">
+        <div class="filters">
+          <div v-for="(g, i) in filters" class="fTag">{{g}}
+            <span @click="removeFilter(i)"><img src="./images/icon-remove.svg" alt=""></span>
+          </div>
+        </div>
+        <span class="clear" @click="clearAll">Clear</span>
+      </section>
+      
+      <section class="jobs">
+        <div v-for="j in filteredData" class="job" :key="j.id">
+          <img :src="j.logo" alt="">
+          <div class="info">
+            <span class="name">{{j.company}}</span>
+            <p class="status">
+              <span v-if="j.new" class="new">New!</span>
+              <span v-if="j.featured" class="featured">Featured</span>
+            </p>
+            <h3 class="position">{{j.position}}</h3>
+            <p class="date">
+              <span>{{j.postedAt}}</span>
+              <span class="dot">.</span>
+              <span>{{j.contract}}</span>
+              <span class="dot">.</span>
+              <span>{{j.location}}</span>
+            </p>
+          </div>
+          <div class="tags">
+            <span v-for="t in j.tags" :key="t" @click="addFilter(t)" key="t">{{t}}</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp, ref } = Vue;
+    let app = createApp({
+      data(){
+        return{
+          data:[],
+          filters:[],
+          filteredData:[],
+        }
+      },
+      async mounted(){
+        let req = await fetch("data.json")
+        let res = await req.json()
+        this.data = res
+        this.filteredData = this.data
+      }, 
+      methods:{
+        addFilter(filter){
+          if (!this.filters.includes(filter)) this.filters.push(filter)
+          this.updateData()
+        },
+        removeFilter(index){
+          this.filters.splice(index , 1)
+          this.updateData()
+        },
+        updateData(){
+          this.filteredData = this.data.filter(el => {
+            const boolean = this.filters.every(tag => {
+              return el.tags.includes(tag);
+            });
+            return boolean
+          });
+          console.log(this.filteredData)
+        },
+        clearAll(){
+          this.filters = []
+          this.filteredData = this.data
+          this.updateData()
+        }
+      }
+    })
+
+    app.mount("#app")
+  </script>
+</body>
+</html>
